@@ -36,25 +36,31 @@ public class PlayerMovement : MonoBehaviour
         //{
         //    FlipSprite();
         //}
-        if (rb.velocity.y > 0f) return;
-        if (IsGrounded()&&GameManager.instance.state==GameState.PLAYABLE)
-            Jumping();
+        //if (rb.velocity.y > 0f) return;
+        //if (IsGrounded()&&GameManager.instance.state==GameState.PLAYABLE)
+        Jumping();
 
         
     }
 
     public void Jumping()
     {
-        //if (PlayerBehaviour.instace.state != PlayerState.IDLE) return;
-        Debug.Log("jump");
-        //rb.AddForce(Vector2.up * jumpingForce, ForceMode2D.Impulse);
-        rb.AddForce(new Vector2(rb.velocity.x,jumpingForce));
+        if (rb.velocity.y > 0f) return;
+        if (IsGrounded() && GameManager.instance.state == GameState.PLAYABLE)
+        {
+            //if (PlayerBehaviour.instace.state != PlayerState.IDLE) return;
+            Debug.Log("jump");
+            //rb.AddForce(Vector2.up * jumpingForce, ForceMode2D.Impulse);
+            //rb.AddForce(new Vector2(rb.velocity.x,jumpingForce));
+            rb.velocity = new Vector2(rb.velocity.x, jumpingForce);
+        }
+            
     }
 
-    public void JumpCancel()
-    {
-        rb.AddForce(Vector2.down * rb.velocity.y * 0.9f, ForceMode2D.Impulse);
-    }
+    //public void JumpCancel()
+    //{
+    //    rb.AddForce(Vector2.down * rb.velocity.y * 0.9f, ForceMode2D.Impulse);
+    //}
 
 
     public bool IsGrounded()

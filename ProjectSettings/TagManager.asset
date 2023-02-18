@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Platform
   layers:
   - Default
   - TransparentFX
@@ -11,8 +12,8 @@ TagManager:
   - 
   - Water
   - UI
-  - Collider
-  - Ball
+  - Player
+  - Platform
   - 
   - 
   - 
@@ -38,6 +39,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 1477955067
+    locked: 0
+  - name: Forceground
+    uniqueID: 2578570691
+    locked: 0
+  - name: GameOver
+    uniqueID: 118255735
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
