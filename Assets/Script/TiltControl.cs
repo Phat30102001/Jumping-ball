@@ -5,16 +5,16 @@ using UnityEngine;
 public class TiltControl : MonoBehaviour
 {
     //public Camera mainCamera;
-    private Rigidbody2D _rb;
-    private CircleCollider2D _circleCollider;
+    protected Rigidbody2D _rb;
+    [SerializeField] protected CircleCollider2D _circleCollider;
     private float _dx;
-    [SerializeField] private float moveSpeed;
-    private float _range;
+    [SerializeField] protected float moveSpeed;
+    protected float _range;
 
-    private void Awake()
+    protected void Awake()
     {
         _rb=GetComponent<Rigidbody2D>();
-        _circleCollider=GetComponent<CircleCollider2D>();
+        //_circleCollider=GetComponent<CircleCollider2D>();
     }
     // Start is called before the first frame update
     void Start()
@@ -29,7 +29,7 @@ public class TiltControl : MonoBehaviour
         //dx=Input.acceleration.x*moveSpeed;
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {   
         if (GameManager.instance.state != GameState.PLAYABLE) return;
         _range = GameManager.instance.player.GetCamWidth() - _circleCollider.radius;

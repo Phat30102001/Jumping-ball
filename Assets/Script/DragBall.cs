@@ -19,6 +19,7 @@ public class DragBall : MonoBehaviour
     {
         if (Input.touchCount > 0)
         {
+            Debug.Log("touched");
             Touch touch= Input.GetTouch(0);
 
             Vector2 touchPos=Camera.main.ScreenToWorldPoint(touch.position);

@@ -8,7 +8,7 @@ public class PlatformChecking : MonoBehaviour
     {
         if (collision.CompareTag(GameTag.Platform.ToString()))
         {
-            Debug.Log("Detected");
+            //Debug.Log("Detected");
             var platformTriggered = collision.GetComponent<Platform>();
             if(platformTriggered.Id<GameManager.instance.LastPlatformSpawned.Id) return;
             GameManager.instance.SpawnPlatform();

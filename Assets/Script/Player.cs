@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public static Player instance;
+
     public Camera mainCamera;
     public GroundCheck groundCheck;
 
     private Rigidbody2D _rb;
-    
+
     //public Transform groundCheck;
     //public LayerMask groundLayer;
     [SerializeField] private float _jumpingForce;
@@ -17,15 +17,11 @@ public class Player : MonoBehaviour
     private Platform _platformLanded;
 
     public Platform PlatformLanded { get => _platformLanded; set => _platformLanded = value; }
-
-    
-
+    public float JumpingForce { get => _jumpingForce;}
 
     private void Awake()
     {
-
-        instance = this;
-        _rb= GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -49,20 +45,47 @@ public class Player : MonoBehaviour
 
     }
 
-    public void Jumping()
-    {
-        if (!groundCheck.isOnGround || _rb.velocity.y > 0) return;
-        if (GameManager.instance.state == GameState.PLAYABLE)
-        {
-            //if (PlayerBehaviour.instace.state != PlayerState.IDLE) return;
-            Debug.Log("jump");
-            //_rb.AddForce(Vector2.up * _jumpingForce, ForceMode2D.Impulse);
-            //rb.AddForce(new Vector2(rb.velocity.x,jumpingForce));
-            _rb.velocity = new Vector2(_rb.velocity.x, _jumpingForce);
-            groundCheck.isOnGround = false;
-        }
 
-    }
+
+
+
+
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    //var player = collision.gameObject;
+    //    //player.GetComponent<Rigidbody2D>().velocity = new Vector2(_rb.velocity.x, 0);
+
+    //    //if (GameManager.instance.state != GameState.PLAYABLE || !collision.gameObject.CompareTag(GameTag.Player.ToString())) return;
+    //    //if (collision.relativeVelocity.y <= 0)
+    //    {
+    //        Jump();
+    //        //player.GetComponent<Rigidbody2D>().AddForce(Vector3.up * 600f);
+    //    }
+    //}
+
+
+    //public void Jumping()
+    //{
+
+    //    if (GameManager.instance.state == GameState.PLAYABLE)
+    //    {
+    //        if (_rb.velocity.y < 0) return;
+    //        if (!groundCheck.isOnGround) return;
+    //        //if (PlayerBehaviour.instace.state != PlayerState.IDLE) return;
+    //        //Debug.Log("jump");
+    //        //_rb.AddForce(Vector2.up * _jumpingForce);
+    //        //rb.AddForce(new Vector2(rb.velocity.x,jumpingForce));
+    //        _rb.velocity = new Vector2(_rb.velocity.x, JumpingForce);
+    //        groundCheck.isOnGround = false;
+    //    }
+    //    if (_rb.velocity.y <= 0)
+    //    {
+    //        _rb.velocity = Vector3.up *  JumpingForce;
+    //        Debug.Log("jump");
+    //    }
+
+    //}
+
 
     public float GetCamWidth()
     {
@@ -70,4 +93,5 @@ public class Player : MonoBehaviour
         float halfWidth = mainCamera.orthographicSize;
         return mainCamera.aspect * halfWidth;
     }
+
 }

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 
 
 public class GameManager : MonoBehaviour
@@ -11,21 +11,25 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance;
 
-    public GameObject mainMenu;
+    [SerializeField] private GameObject mainMenu,gameOver;
+    [SerializeField] private TextMeshProUGUI _score;
     public Player player;
     public int startingPlatform;
     public Platform[] platformPref;
-    public float minYspawnPos, maxYspawnPos;
+    [SerializeField] private float minYspawnPos, maxYspawnPos;
     public GameObject platformCollider, platformManager;
 
     [SerializeField] private Platform _lastPlatformSpawned;
     private List<int> _platformLandedId;
-    private int _score;
+    private int _highgestPlatformLanded;
     private float _halfCamSizeX;
+
+    [Range(0,2)]
+    [SerializeField] private float time;
 
     public Platform LastPlatformSpawned { get => _lastPlatformSpawned; set => _lastPlatformSpawned = value; }
     public List<int> PlatformLandedId { get => _platformLandedId; set => _platformLandedId = value; }
-    public int Score { get => _score;}
+    public int HighgestPlatformLanded { get => _highgestPlatformLanded; set => _highgestPlatformLanded = value; }
 
     private void Awake()
     {
@@ -35,6 +39,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        HighgestPlatformLanded = 0;
         _halfCamSizeX=player.GetCamWidth()-(platformCollider.transform.localScale.x * platformCollider.GetComponent<BoxCollider2D>().size.x/2);
         UpdateGameState(GameState.START);
     }
@@ -42,7 +47,16 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Time.timeScale = time;
+        _score.text = GetScore().ToString();
+        //Debug.Log(GetScore());
+    }
+    public int GetScore()
+    {
+        if (!player.PlatformLanded || player.PlatformLanded.Id < HighgestPlatformLanded) return HighgestPlatformLanded;
         
+        HighgestPlatformLanded = player.PlatformLanded.Id;
+        return HighgestPlatformLanded;
     }
     public void UpdateGameState(GameState newstate)
     {
@@ -51,15 +65,17 @@ public class GameManager : MonoBehaviour
         switch(state)
         {
             case GameState.START:
-                Invoke("PlatformInit", 0.5f);
+                Invoke("PlatformInit", 0.2f);
                 break;
 
             case GameState.PLAYABLE:
-                player.Jumping();
+                //player.Jumping();
                 //Debug.Log("first jump");
+                player.GetComponent<Rigidbody2D>().velocity = new Vector2(0, GameManager.instance.player.JumpingForce);
                 break;
 
             case GameState.END:
+                GameOver();
                 break;
 
 
@@ -76,7 +92,7 @@ public class GameManager : MonoBehaviour
     {
         if (!player || platformPref == null || platformPref.Length <= 0) return;
         float spawnPosX = Random.Range(-_halfCamSizeX,_halfCamSizeX);
-        float disBetweenPlatform=Random.Range(minYspawnPos,maxYspawnPos);
+        float disBetweenPlatform= Random.Range(minYspawnPos,maxYspawnPos);
         float spawnPosY = LastPlatformSpawned.transform.position.y + disBetweenPlatform;
         Vector3 spawnPos = new Vector3(spawnPosX, spawnPosY, 0f);
 
@@ -94,9 +110,14 @@ public class GameManager : MonoBehaviour
     private void PlatformInit()
     {
         LastPlatformSpawned = player.PlatformLanded;
-        for(int i = 0; i < startingPlatform; i++)
+        for (int i = 0; i < startingPlatform; i++)
         {
             SpawnPlatform();
         }
+    }
+
+    private void GameOver()
+    {
+        gameOver.SetActive(true);
     }
 }
