@@ -15,8 +15,8 @@ public class GameOverManager : MonoBehaviour
         UpdateHighScore();
         
         highScore.text = PlayerPrefs.GetInt(PrefKey.HighScore.ToString()).ToString();
-        
-        
+
+        GameManager.instance.playfabManager.SendLeaderboard(int.Parse(highScore.text));
     }
 
     // Update is called once per frame
@@ -24,11 +24,15 @@ public class GameOverManager : MonoBehaviour
     {
         
     }
-    void UpdateHighScore()
-    {Debug.Log(PlayerPrefs.GetInt(PrefKey.HighScore.ToString())+"     "+ int.Parse(score.text));
+    void UpdateHighScore() 
+    { 
+
+    //{Debug.Log(PlayerPrefs.GetInt(PrefKey.HighScore.ToString())+"     "+ int.Parse(score.text));
         if (PlayerPrefs.GetInt(PrefKey.HighScore.ToString()) >= int.Parse(score.text)) return;
 
         
         PlayerPrefs.SetInt(PrefKey.HighScore.ToString(), int.Parse(score.text));
+
+        
     }
 }

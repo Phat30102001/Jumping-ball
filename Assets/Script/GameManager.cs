@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance;
 
-    [SerializeField] private GameObject mainMenu,gameOver;
+    public GameObject mainMenu,gameOver;
     [SerializeField] private TextMeshProUGUI score;
     public Player player;
     public int startingPlatform;
@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float minYspawnPos, maxYspawnPos;
     public GameObject platformCollider, platformManager;
     public Transform leftPoint,rightPoint;
+    public PlayfabManager playfabManager;
 
     [SerializeField] private Platform _lastPlatformSpawned;
     
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour
         instance= this;
         PlatformLandedId= new List<int>();
         groundPlatform = GameObject.Find("GroundPlatform").GetComponent<Platform>();
+        //groundPlatform.transform.position = new Vector3(0f, -player.GetCamHeight(), 0);
         Score.gameObject.SetActive(false);
         //if (!LastPlatformSpawned)
         //{
@@ -89,11 +91,12 @@ public class GameManager : MonoBehaviour
             case GameState.START:
                 //AudioManager.instance.PlaySound("Background");
                 
-                Invoke("PlatformInit", 0.2f);
+                
                 break;
 
             case GameState.PLAYABLE:
-                if(AudioManager.instance)
+                Invoke("PlatformInit", 0.2f);
+                if (AudioManager.instance)
                     AudioManager.instance.PlaySound(SoundName.Theme.ToString());
                 Score.gameObject.SetActive(true);
                 player.GetComponent<Rigidbody2D>().velocity = new Vector2(0, GameManager.instance.player.JumpingForce);
@@ -115,6 +118,7 @@ public class GameManager : MonoBehaviour
 
     public void SpawnPlatform()
     {
+        if (state != GameState.PLAYABLE) return;
         if (!player || platformPref == null || platformPref.Length <= 0) return;
         float spawnPosX = Random.Range(leftPoint.position.x, rightPoint.position.x);
         float disBetweenPlatform= Random.Range(minYspawnPos,maxYspawnPos);

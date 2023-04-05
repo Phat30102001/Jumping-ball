@@ -26,7 +26,7 @@ public class MovingPlatform : Platform
         _movingPoint.position = new Vector2(pointList[currentWaypointIndex].transform.position.x, transform.position.y);
         if (Vector2.Distance(_movingPoint.position, transform.position)<0.1f)
         {
-            Debug.Log("swtich point");
+            //Debug.Log("swtich point");
             currentWaypointIndex++;
             if (currentWaypointIndex >= pointList.Count)
             {

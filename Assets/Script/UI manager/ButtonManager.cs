@@ -25,4 +25,9 @@ public class ButtonManager : MonoBehaviour
         SceneManager.LoadScene(0);
         Time.timeScale = 1.0f;
     }
+    public void Play()
+    {
+        GameManager.instance.UpdateGameState(GameState.PLAYABLE);
+        GameManager.instance.mainMenu.SetActive(false);
+    }
 }
