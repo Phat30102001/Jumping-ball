@@ -30,11 +30,11 @@ public class PlayfabManager:MonoBehaviour
     {
         //call api
         var request = new LoginWithCustomIDRequest {
-            //CustomId = "New player", 
             CustomId=SystemInfo.deviceUniqueIdentifier,
-            CreateAccount = true, 
-            InfoRequestParameters=new GetPlayerCombinedInfoRequestParams {
-            GetPlayerProfile=true
+            CreateAccount = true,
+            InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
+            {
+                GetPlayerProfile = true
             }
         };
         PlayFabClientAPI.LoginWithCustomID(request, OnSuccess, OnError);
@@ -43,7 +43,7 @@ public class PlayfabManager:MonoBehaviour
     {
         Debug.Log("Success login/account created");
         string name = null;
-        if(result.InfoResultPayload.PlayerProfile != null)
+        if (result.InfoResultPayload.PlayerProfile != null)
             name = result.InfoResultPayload.PlayerProfile.DisplayName;
         if (name == null)
             nameWindow.SetActive(true);
@@ -52,7 +52,7 @@ public class PlayfabManager:MonoBehaviour
             leaderboardWindow.SetActive(true);
             GetLeaderboard();
         }
-            
+
 
     }
     void OnError(PlayFabError error)
@@ -100,7 +100,14 @@ public class PlayfabManager:MonoBehaviour
             GameObject row = Instantiate(rowPrefab, rowsParent);
             TextMeshProUGUI[] text = row.GetComponentsInChildren<TextMeshProUGUI>();
             text[0].text=(item.Position+1).ToString();
-            text[1].text = item.PlayFabId;
+
+            string name;
+            if(item.DisplayName!= null)
+                name = item.DisplayName;
+            else
+                name=item.PlayFabId.ToString();
+
+            text[1].text=name;
             text[2].text=item.StatValue.ToString();
 
 
