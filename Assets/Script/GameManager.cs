@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance;
 
-    public GameObject mainMenu,gameOver;
+    public GameObject mainMenu,gameOver,gamePlay;
     [SerializeField] private TextMeshProUGUI score;
     public Player player;
     public int startingPlatform;
@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
         PlatformLandedId= new List<int>();
         groundPlatform = GameObject.Find("GroundPlatform").GetComponent<Platform>();
         //groundPlatform.transform.position = new Vector3(0f, -player.GetCamHeight(), 0);
-        Score.gameObject.SetActive(false);
+        //gamePlay.SetActive(false);
         //if (!LastPlatformSpawned)
         //{
         //    LastPlatformSpawned = GameObject.Find("GroundPlatform").GetComponent<Platform>();
@@ -95,6 +95,7 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GameState.PLAYABLE:
+                gamePlay.SetActive(true);
                 Invoke("PlatformInit", 0.2f);
                 if (AudioManager.instance)
                     AudioManager.instance.PlaySound(SoundName.Theme.ToString());

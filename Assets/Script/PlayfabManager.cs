@@ -10,7 +10,7 @@ public class PlayfabManager:MonoBehaviour
 {
     public static PlayfabManager instance;
 
-    public GameObject nameWindow, leaderboardWindow;
+    public GameObject leaderboardWindow;
     public GameObject rowPrefab;
     public Transform rowsParent;
     public TMP_InputField nameInput;
@@ -45,13 +45,13 @@ public class PlayfabManager:MonoBehaviour
         string name = null;
         if (result.InfoResultPayload.PlayerProfile != null)
             name = result.InfoResultPayload.PlayerProfile.DisplayName;
-        if (name == null)
-            nameWindow.SetActive(true);
-        else
-        {
-            leaderboardWindow.SetActive(true);
-            GetLeaderboard();
-        }
+        //if (name == null)
+        //    nameWindow.SetActive(true);
+        //else
+        //{
+        //    leaderboardWindow.SetActive(true);
+        //    GetLeaderboard();
+        //}
 
 
     }
@@ -83,7 +83,6 @@ public class PlayfabManager:MonoBehaviour
 
     public void GetLeaderboard()
     {
-        Debug.Log("aaaaaaa");
         var request = new GetLeaderboardRequest
         {
             StatisticName = PlayfabKey.Score.ToString(),
@@ -127,7 +126,6 @@ public class PlayfabManager:MonoBehaviour
     void OnDisplayNameUpdate(UpdateUserTitleDisplayNameResult result)
     {
         Debug.Log("Updated display name");
-        leaderboardWindow.SetActive(true);
     }
 
 

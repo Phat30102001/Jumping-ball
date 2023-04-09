@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ButtonManager : MonoBehaviour
 {
-    [SerializeField] private GameObject pauseMenu;
+    public GameObject pauseMenu, leaderboard;
 
     public void Pause()
     {
@@ -13,11 +13,16 @@ public class ButtonManager : MonoBehaviour
         Time.timeScale = 0f;
 
     }
+    public void OpenLeaderboard()
+    {
+        leaderboard.SetActive(true);
+
+    }
     public void Resume()
     {
+        leaderboard.SetActive(false);
         pauseMenu.SetActive(false);
         Time.timeScale = 1.0f;
-
     }
 
     public void Restart()
