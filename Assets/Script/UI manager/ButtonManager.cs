@@ -11,6 +11,7 @@ public class ButtonManager : MonoBehaviour
     {
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
+        
 
     }
     public void OpenLeaderboard()

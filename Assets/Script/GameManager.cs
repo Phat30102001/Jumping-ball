@@ -41,12 +41,7 @@ public class GameManager : MonoBehaviour
         instance= this;
         PlatformLandedId= new List<int>();
         groundPlatform = GameObject.Find("GroundPlatform").GetComponent<Platform>();
-        //groundPlatform.transform.position = new Vector3(0f, -player.GetCamHeight(), 0);
-        //gamePlay.SetActive(false);
-        //if (!LastPlatformSpawned)
-        //{
-        //    LastPlatformSpawned = GameObject.Find("GroundPlatform").GetComponent<Platform>();
-        //}
+
     }
     // Start is called before the first frame update
     void Start()
@@ -90,8 +85,8 @@ public class GameManager : MonoBehaviour
         {
             case GameState.START:
                 //AudioManager.instance.PlaySound("Background");
-                
-                
+
+
                 break;
 
             case GameState.PLAYABLE:

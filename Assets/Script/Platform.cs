@@ -34,26 +34,3 @@ public class Platform : MonoBehaviour
 
     }
 }
-public class Song
-{
-    private string name;
-    public Song NextSong { get; set; }
-    public Song(string name)
-    {
-        this.name = name;
-    }
-    public bool IsRepeatingPlaylist()
-    {
-        if (this.NextSong == null) return false;
-        else
-            return true;
-    }
-    public static void Main(string[] args)
-    {
-        Song first = new Song("Hello");
-        Song second = new Song("Take me to your heart");
-        first.NextSong = second;
-        second.NextSong = first;
-        Debug.Log(first.IsRepeatingPlaylist());
-    }
-}

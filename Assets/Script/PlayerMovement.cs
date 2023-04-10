@@ -25,19 +25,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        //kBCounter = unit.KBTotalTime;
-
-        //// facing direction
-        //if (!isFacingRight && horizontal > 0f)
-        //{
-        //    FlipSprite();
-        //}
-        //else if (isFacingRight && horizontal < 0f)
-        //{
-        //    FlipSprite();
-        //}
-        //if (rb.velocity.y > 0f) return;
-        //if (IsGrounded()&&GameManager.instance.state==GameState.PLAYABLE)
         Jumping();
 
         
@@ -53,14 +40,11 @@ public class PlayerMovement : MonoBehaviour
             //rb.AddForce(Vector2.up * jumpingForce, ForceMode2D.Impulse);
             //rb.AddForce(new Vector2(rb.velocity.x,jumpingForce));
             rb.velocity = new Vector2(rb.velocity.x, jumpingForce);
+            
         }
             
     }
 
-    //public void JumpCancel()
-    //{
-    //    rb.AddForce(Vector2.down * rb.velocity.y * 0.9f, ForceMode2D.Impulse);
-    //}
 
 
     public bool IsGrounded()
@@ -68,10 +52,5 @@ public class PlayerMovement : MonoBehaviour
         return Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
     }
 
-    //public void Move( InputAction.CallbackContext context)
-    //{
-    //    horizontal = context.ReadValue<Vector2>().x;
-    //    //horizontal's always = 1
-    //    animator.SetFloat("IsRun", Mathf.Abs(horizontal));
-    //}
+
 }
