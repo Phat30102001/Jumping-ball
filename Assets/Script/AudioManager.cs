@@ -6,8 +6,7 @@ using System;
 
 public class AudioManager : MonoBehaviour
 {
-    //public AudioMixerGroup backgroundMixerGroup;
-    //public AudioMixerGroup soundEffectMixerGroup;
+
     public static AudioManager instance;
     public Sound[] sound;
 
@@ -22,10 +21,6 @@ public class AudioManager : MonoBehaviour
             s.audioSource.volume = s.volume;
             s.audioSource.loop = s.loop;
 
-
-            
-            //s.audioSource.volume = PlayerPrefs.GetFloat("BackgroundVolume");
-
             
         }
     }
@@ -39,12 +34,4 @@ public class AudioManager : MonoBehaviour
         Sound s=Array.Find(sound, sound => sound.name == name);
         s.audioSource.Stop();
     }
-    //public void UpdateAudioMixerVolume()
-    //{
-    //    float a = Mathf.Log10(AudioOptionManager.BackgroundVolume) * 20;
-    //    backgroundMixerGroup.audioMixer.SetFloat("Background volume", a);
-    //    Debug.Log(a);
-
-    //    soundEffectMixerGroup.audioMixer.SetFloat("Sound effect volume", Mathf.Log10(AudioOptionManager.SoundEffectVolume) * 20);
-    //}
 }

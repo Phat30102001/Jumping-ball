@@ -10,13 +10,14 @@ public class GameOverManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {   
-        
+        // score is the current score in this run
         score.text = GameManager.instance.Score.text;
         UpdateHighScore();
         
+        // display score to UI
         highScore.text = PlayerPrefs.GetInt(PrefKey.HighScore.ToString()).ToString();
 
-        GameManager.instance.playfabManager.SendLeaderboard(int.Parse(highScore.text));
+        
     }
 
     // Update is called once per frame
@@ -27,12 +28,14 @@ public class GameOverManager : MonoBehaviour
     void UpdateHighScore() 
     { 
 
-    //{Debug.Log(PlayerPrefs.GetInt(PrefKey.HighScore.ToString())+"     "+ int.Parse(score.text));
+        
         if (PlayerPrefs.GetInt(PrefKey.HighScore.ToString()) >= int.Parse(score.text)) return;
 
-        
+        // update highscore for offline mode
         PlayerPrefs.SetInt(PrefKey.HighScore.ToString(), int.Parse(score.text));
+        // update highscore for online mode
+        GameManager.instance.playfabManager.SendLeaderboard(int.Parse(highScore.text));
 
-        
+
     }
 }

@@ -28,11 +28,13 @@ public class ButtonManager : MonoBehaviour
 
     public void Restart()
     {
+        //reload the scene, game will be reset except the save data like score
         SceneManager.LoadScene(0);
         Time.timeScale = 1.0f;
     }
     public void Play()
     {
+        //change state and deactive main menu ui
         GameManager.instance.UpdateGameState(GameState.PLAYABLE);
         GameManager.instance.mainMenu.SetActive(false);
     }
