@@ -1,4 +1,8 @@
 # Jumping-ball
+Sinh viên thực hiện: Lý Minh Phát
+MSSV: 19H1120056
+
+
 Môi trường unity 2021.3.10f1
 Platform Android
 
@@ -12,3 +16,6 @@ Lệnh clone git:
 git clone https://github.com/Phat30102001/Jumping-ball.git
 
 Chạy folder bằng unity hub
+
+
+

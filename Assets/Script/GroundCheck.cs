@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GroundCheck : MonoBehaviour
 {
-    //public bool isOnGround;
 
+    // get the platform id player landed
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag(GameTag.Platform.ToString()))
@@ -14,11 +14,6 @@ public class GroundCheck : MonoBehaviour
             var platformLand = collision.gameObject.GetComponent<Platform>();
             GameManager.instance.player.PlatformLanded = platformLand;
 
-                
-
-
-            //if (GameManager.instance.state != GameState.PLAYABLE) return;
-            //Debug.Log("jumping");
         }
     }
 

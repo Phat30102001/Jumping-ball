@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
+    // auto jump once the game start (change state to PLAYABLE)
     public void Jumping()
     {
         if (rb.velocity.y > 0f) return;
@@ -46,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-
+    //player can jump when it touch to platform, prevent multi jump
     public bool IsGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);

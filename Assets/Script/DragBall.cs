@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//class for draging ball, unuse
 public class DragBall : MonoBehaviour
 {
     private float deltaX;
-    //private float deltaY;
     private Rigidbody2D rb;
 
     // Start is called before the first frame update
@@ -28,15 +29,10 @@ public class DragBall : MonoBehaviour
             {
                 case TouchPhase.Began:
                     deltaX=touchPos.x-transform.position.x;
-                    //deltaY=touchPos.y-transform.position.y;
                     break;
                 case TouchPhase.Moved:
                     rb.velocity=new Vector2(touchPos.x - deltaX,rb.velocity.y);
                     break;
-                    
-                //case TouchPhase.Ended:
-                //    rb.velocity = Vector2.zero;
-                //    break;
             }
         }
     }

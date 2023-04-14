@@ -20,12 +20,13 @@ public class PlayfabManager:MonoBehaviour
         instance = this;    
     }
 
-    // Start is called before the first frame update
+    // auto login when lanch the game
     void Start()
     {
         Login();
     }
 
+    //if the device haven't has a account, create it with that device id (unique)
     private void Login()
     {
         //call api
@@ -39,6 +40,8 @@ public class PlayfabManager:MonoBehaviour
         };
         PlayFabClientAPI.LoginWithCustomID(request, OnSuccess, OnError);
     }
+
+    // get account's name on successful login
     void OnSuccess(LoginResult result)
     {
         Debug.Log("Success login/account created");
@@ -55,12 +58,14 @@ public class PlayfabManager:MonoBehaviour
 
 
     }
+    //display in console if something failed
     void OnError(PlayFabError error)
     {
         Debug.Log("Error while logging in/ creating account");
         Debug.Log(error.GenerateErrorReport());
     }
 
+    //update highscore when game over
     public void SendLeaderboard(int score)
     {
         var request = new UpdatePlayerStatisticsRequest
@@ -81,6 +86,7 @@ public class PlayfabManager:MonoBehaviour
         Debug.Log("Success update leaderboard");
     }
 
+    //get 5 best player display on leaderboard
     public void GetLeaderboard()
     {
         var request = new GetLeaderboardRequest

@@ -35,6 +35,8 @@ public class TiltControl : MonoBehaviour
         _range = GameManager.instance.player.GetCamWidth() - _circleCollider.radius;
 
         _dx = Input.acceleration.x * moveSpeed;
+
+        // set the position for player in camera 
         transform.position = new Vector2(Mathf.Clamp(transform.position.x, -_range, _range), transform.position.y);
         _rb.velocity = new Vector2(_dx, _rb.velocity.y);
     }

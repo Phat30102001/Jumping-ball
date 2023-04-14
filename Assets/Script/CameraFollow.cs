@@ -8,6 +8,7 @@ public class CameraFollow : MonoBehaviour
 
     public Transform target;
     public Vector3 offset;
+
     [Range(1f, 10f)]
     public float smoothFactor;
 
@@ -22,7 +23,7 @@ public class CameraFollow : MonoBehaviour
     private void Follow()
     {
         if (target == null || target.transform.position.y < transform.position.y) return;
-        //Debug.Log("follow");
+        //target is player
         Vector3 targetPos = new Vector3(0f, target.transform.position.y, 0f) + offset;
         Vector3 smoothedPos=Vector3.Lerp(transform.position, targetPos, smoothFactor*Time.deltaTime);
 

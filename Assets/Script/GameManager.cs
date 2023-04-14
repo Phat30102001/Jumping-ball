@@ -11,14 +11,23 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance;
 
+    //ui panel
     public GameObject mainMenu,gameOver,gamePlay;
+
+
     [SerializeField] private TextMeshProUGUI score;
+
     public Player player;
     public int startingPlatform;
+
     public Platform[] platformPref;
+
+    //position for moving platform to move
     [SerializeField] private float minYspawnPos, maxYspawnPos;
     public GameObject platformCollider, platformManager;
     public Transform leftPoint,rightPoint;
+
+    //playfab
     public PlayfabManager playfabManager;
 
     [SerializeField] private Platform _lastPlatformSpawned;
@@ -28,8 +37,6 @@ public class GameManager : MonoBehaviour
     private int _highgestPlatformLanded;
 
 
-    //[Range(0,2)]
-    //[SerializeField] private float time;
 
     public Platform LastPlatformSpawned { get => _lastPlatformSpawned; set => _lastPlatformSpawned = value; }
     public List<int> PlatformLandedId { get => _platformLandedId; set => _platformLandedId = value; }
@@ -54,22 +61,25 @@ public class GameManager : MonoBehaviour
         float platformSpawnablePoint=player.GetCamWidth()-(platformCollider.transform.localScale.x * platformCollider.GetComponent<BoxCollider2D>().size.x/2);
         leftPoint.position = new Vector3(-platformSpawnablePoint, transform.position.y, 0f);
         rightPoint.position = new Vector3(platformSpawnablePoint, transform.position.y, 0f);
+
+        //start with "START" state
         UpdateGameState(GameState.START);
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        //Time.timeScale = time;
         Score.text = GetScore().ToString();
-        //Debug.Log(GetScore());
     }
     public int GetScore()
     {
+
+        //update score base on highest platform player land
         if (player.PlatformLanded && player.PlatformLanded.Id > HighgestPlatformLanded)
         {
             HighgestPlatformLanded = player.PlatformLanded.Id;
+
+            //increase game speed for more chalenge
             if (HighgestPlatformLanded % 15 == 0 && HighgestPlatformLanded != 0&& Time.timeScale<=2f)
                 Time.timeScale += 0.05f;
         }
@@ -77,6 +87,8 @@ public class GameManager : MonoBehaviour
         
         return HighgestPlatformLanded;
     }
+
+    //State mananger design pattern
     public void UpdateGameState(GameState newstate)
     {
         state= newstate;
@@ -84,9 +96,6 @@ public class GameManager : MonoBehaviour
         switch(state)
         {
             case GameState.START:
-                //AudioManager.instance.PlaySound("Background");
-
-
                 break;
 
             case GameState.PLAYABLE:
@@ -106,11 +115,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void PlayButton()
-    {
-        UpdateGameState(GameState.PLAYABLE);
-        mainMenu.SetActive(false);   
-    }
+    //public void PlayButton()
+    //{
+    //    UpdateGameState(GameState.PLAYABLE);
+    //    mainMenu.SetActive(false);   
+    //}
 
     public void SpawnPlatform()
     {
@@ -121,11 +130,13 @@ public class GameManager : MonoBehaviour
         float spawnPosY = LastPlatformSpawned.transform.position.y + disBetweenPlatform;
         Vector3 spawnPos = new Vector3(spawnPosX, spawnPosY, 0f);
 
+        //randomly choose platform 
         int randomId=Random.Range(0,platformPref.Length);
         var platform = platformPref[randomId];
         
         if (!platform) return;
         
+        // create object
         var platformClone=Instantiate(platform,spawnPos,Quaternion.identity);
         platformClone.transform.parent= platformManager.transform;
         platformClone.Id = LastPlatformSpawned.Id + 1;
