@@ -96,6 +96,7 @@ public class GameManager : MonoBehaviour
         switch(state)
         {
             case GameState.START:
+                //PlayerPrefs.SetInt(PrefKey.HighScore.ToString(), 0);
                 break;
 
             case GameState.PLAYABLE:

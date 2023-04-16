@@ -587,6 +587,7 @@ GameObject:
   - component: {fileID: 110182275}
   - component: {fileID: 110182277}
   - component: {fileID: 110182280}
+  - component: {fileID: 110182281}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -659,7 +660,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _circleCollider: {fileID: 919871854}
-  moveSpeed: 20
+  moveSpeed: 18
 --- !u!251 &110182276
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -735,7 +736,7 @@ TrailRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 110182269}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -844,6 +845,18 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &110182281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110182269}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d36cfaf1c05cf042ab5206525851dbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &182518575
 GameObject:
   m_ObjectHideFlags: 0

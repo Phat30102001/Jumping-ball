@@ -5,6 +5,7 @@ using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class PlayfabManager:MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class PlayfabManager:MonoBehaviour
     public GameObject rowPrefab;
     public Transform rowsParent;
     public TMP_InputField nameInput;
+
 
     private void Awake()
     {
@@ -41,28 +43,13 @@ public class PlayfabManager:MonoBehaviour
         PlayFabClientAPI.LoginWithCustomID(request, OnSuccess, OnError);
     }
 
-    // get account's name on successful login
-    void OnSuccess(LoginResult result)
+    public void SubmitNameButton()
     {
-        Debug.Log("Success login/account created");
-        string name = null;
-        if (result.InfoResultPayload.PlayerProfile != null)
-            name = result.InfoResultPayload.PlayerProfile.DisplayName;
-        //if (name == null)
-        //    nameWindow.SetActive(true);
-        //else
-        //{
-        //    leaderboardWindow.SetActive(true);
-        //    GetLeaderboard();
-        //}
-
-
-    }
-    //display in console if something failed
-    void OnError(PlayFabError error)
-    {
-        Debug.Log("Error while logging in/ creating account");
-        Debug.Log(error.GenerateErrorReport());
+        var request = new UpdateUserTitleDisplayNameRequest
+        {
+            DisplayName = nameInput.text,
+        };
+        PlayFabClientAPI.UpdateUserTitleDisplayName(request,OnDisplayNameUpdate, OnError);
     }
 
     //update highscore when game over
@@ -81,11 +68,6 @@ public class PlayfabManager:MonoBehaviour
         PlayFabClientAPI.UpdatePlayerStatistics(request, OnLeaderboard, OnError);
     }
 
-    void OnLeaderboard(UpdatePlayerStatisticsResult result)
-    {
-        Debug.Log("Success update leaderboard");
-    }
-
     //get 5 best player display on leaderboard
     public void GetLeaderboard()
     {
@@ -98,6 +80,67 @@ public class PlayfabManager:MonoBehaviour
         PlayFabClientAPI.GetLeaderboard(request, OnLeaderboardGet, OnError);
 
     }
+
+    //public void GetPlayerStatistics()
+    //{
+    //    PlayFabClientAPI.GetPlayerStatistics(new GetPlayerStatisticsRequest
+    //    {
+    //        StatisticNames = new List<string> { PlayfabKey.Score.ToString() } 
+    //    }, OnGetPlayerStatisticsSuccess, OnGetPlayerStatisticsFailure);
+    //}
+
+    // get account's name on successful login
+    void OnSuccess(LoginResult result)
+    {
+        Debug.Log("Success login/account created");
+        string name = null;
+        if (result.InfoResultPayload.PlayerProfile != null)
+            name = result.InfoResultPayload.PlayerProfile.DisplayName;
+        //if (name == null)
+        //    nameWindow.SetActive(true);
+        //else
+        //{
+        //    leaderboardWindow.SetActive(true);
+        //    GetLeaderboard();
+        //}
+
+
+    }
+
+    //display in console if something failed
+    void OnError(PlayFabError error)
+    {
+        Debug.Log("Error while logging in/ creating account");
+        Debug.Log(error.GenerateErrorReport());
+    }
+
+    //void OnGetPlayerStatisticsSuccess(GetPlayerStatisticsResult result)
+    //{
+
+    //    var playerScoreStat = result.Statistics.Find(x => x.StatisticName == PlayfabKey.Score.ToString());
+    //    if (playerScoreStat != null)
+    //    {
+
+    //        int playerScore = playerScoreStat.Value;
+    //        Debug.Log("Player Score: " + playerScore);
+    //    }
+    //    else
+    //    {
+
+    //        Debug.Log("Player does not have a score yet.");
+    //    }
+    //}
+
+    //void OnGetPlayerStatisticsFailure(PlayFabError error)
+    //{
+    //    Debug.Log("Get Player Statistics failed: " + error.ErrorMessage);
+    //}
+
+    void OnLeaderboard(UpdatePlayerStatisticsResult result)
+    {
+        Debug.Log("Success update leaderboard");
+    }
+
     void OnLeaderboardGet(GetLeaderboardResult leaderboardResult)
     {
         foreach(var item in leaderboardResult.Leaderboard)
@@ -116,19 +159,11 @@ public class PlayfabManager:MonoBehaviour
             text[2].text=item.StatValue.ToString();
 
 
-            Debug.Log(string.Format("Rank: {0},ID: {1}, Score: {2}", item.Position, item.PlayFabId, item.StatValue));
+            //Debug.Log(string.Format("Rank: {0},ID: {1}, Score: {2}", item.Position, item.PlayFabId, item.StatValue));
             //Debug.Log( item.Position + "\t " + item.PlayFabId + "\t " + item.StatValue);
         }
-    }
+    }   
 
-    public void SubmitNameButton()
-    {
-        var request = new UpdateUserTitleDisplayNameRequest
-        {
-            DisplayName = nameInput.text,
-        };
-        PlayFabClientAPI.UpdateUserTitleDisplayName(request,OnDisplayNameUpdate, OnError);
-    }
     void OnDisplayNameUpdate(UpdateUserTitleDisplayNameResult result)
     {
         Debug.Log("Updated display name");

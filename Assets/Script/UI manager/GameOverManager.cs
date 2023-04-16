@@ -27,14 +27,18 @@ public class GameOverManager : MonoBehaviour
     }
     void UpdateHighScore() 
     { 
+        //GameManager.instance.playfabManager.GetPlayerStatistics();
 
+        GameManager.instance.playfabManager.SendLeaderboard(PlayerPrefs.GetInt(PrefKey.HighScore.ToString()));
         
         if (PlayerPrefs.GetInt(PrefKey.HighScore.ToString()) >= int.Parse(score.text)) return;
 
         // update highscore for offline mode
         PlayerPrefs.SetInt(PrefKey.HighScore.ToString(), int.Parse(score.text));
         // update highscore for online mode
-        GameManager.instance.playfabManager.SendLeaderboard(int.Parse(highScore.text));
+        
+
+       
 
 
     }
